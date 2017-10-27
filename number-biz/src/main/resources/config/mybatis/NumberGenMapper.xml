@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xuxl.number.biz.repository.NumGenRepository">
+
+    <select id="findAll" resultType="com.xuxl.number.biz.entity.NumGenEntity">
+        SELECT
+            `id`            AS id,
+            `biz_code`      AS bizCode,
+            `sub_biz_code`  AS subBizCode,
+            `biz_desc`      AS bizDesc,
+            `type`          AS type,
+            `current_value` AS currentValue,
+            `buffer_size`   AS bufferSize,
+            `create_time`   AS createTime,
+            `update_time`   AS updateTime
+        FROM num_generator
+    </select>
+
+    <select id="find" resultType="com.xuxl.number.biz.entity.NumGenEntity" parameterType="map">
+        SELECT
+            `id`            AS id,
+            `biz_code`      AS bizCode,
+            `sub_biz_code`  AS subBizCode,
+            `biz_desc`      AS bizDesc,
+            `type`          AS type,
+            `current_value` AS currentValue,
+            `buffer_size`   AS bufferSize,
+            `create_time`   AS createTime,
+            `update_time`   AS updateTime
+        FROM num_generator
+        WHERE `biz_code` = #{bizCode} AND `sub_biz_code` = #{subBizCode}
+
+    </select>
+
+
+    <update id="updateValue" parameterType="map">
+        UPDATE num_generator
+        SET current_value = current_value + #{value}, update_time = NOW()
+        WHERE biz_code = #{bizCode} AND sub_biz_code = #{subBizCode}
+    </update>
+
+</mapper>
